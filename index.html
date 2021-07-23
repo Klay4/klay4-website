@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Home - Klay4</title>
+	<link href="https://fonts.googleapis.com/css?family=Reem+Kufi|Roboto:300" rel="stylesheet">
+	<link href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" rel="stylesheet">
+	<link rel="stylesheet" href="./css/reset.css">
+	<link rel="stylesheet" href="./css/styles.css">
+	<link rel="stylesheet" href="./css/themes/gray-white.css">
+</head>
+
+<body>
+	<main>
+		<div class="intro">
+			<div id="rotate" style="display: inline-flex">
+				<div>Ciao, sono </div>
+				<div>Hi, I'm </div>
+				<div>Hola, soy </div>
+				<div>Salut, Je suis </div>
+			</div>
+			<div style="display: inline">Kevin.</div>
+		</div>
+		<div class="tagline">An Italian student and a developer in my spare time.</div>
+		</div>
+		<div class="icons-social">
+			<a target="_blank" href="https://github.com/Klay4"><i class="fab fa-github"></i></a>
+			<a href="https://www.klayhosting.com"><i class="fa fa-cloud"></i></a>
+			<a href="https://klayhosting.statuspage.io"><i class="fa fa-signal"></i></a>
+		</div>
+	</main>
+	<script src="js/jquery.min.js"></script>
+	<script>
+		(function ($) {
+			$.fn.extend({
+				rotaterator: function (options) {
+
+					var defaults = {
+						fadeSpeed: 500,
+						pauseSpeed: 200,
+						child: null
+					};
+
+					var options = $.extend(defaults, options);
+
+					return this.each(function () {
+						var o = options;
+						var obj = $(this);
+						var items = $(obj.children(), obj);
+						items.each(function () {
+							$(this).hide();
+						})
+						if (!o.child) {
+							var next = $(obj).children(':first');
+						} else {
+							var next = o.child;
+						}
+						$(next).fadeIn(o.fadeSpeed, function () {
+							$(next).delay(o.pauseSpeed).fadeOut(o.fadeSpeed, function () {
+								var next = $(this).next();
+								if (next.length == 0) {
+									next = $(obj).children(':first');
+								}
+								$(obj).rotaterator({
+									child: next,
+									fadeSpeed: o.fadeSpeed,
+									pauseSpeed: o.pauseSpeed
+								});
+							})
+						});
+					});
+				}
+			});
+		})(jQuery);
+
+		$(document).ready(function () {
+			$('#rotate').rotaterator({
+				fadeSpeed: 800,
+				pauseSpeed: 300
+			});
+		});
+	</script>
+</body>
+
+</html>
